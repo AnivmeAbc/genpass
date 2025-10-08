@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecurePass Pro | Генератор паролей</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="glass-card">
+            <!-- Header -->
+            <div class="header">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <h1>SecurePass Pro</h1>
+                </div>
+                <p class="subtitle">Генератор безопасных паролей</p>
+            </div>
+
+            <!-- Password Display -->
+            <div class="password-display">
+                <div class="password-field">
+                    <input type="text" id="password" readonly placeholder="Ваш пароль появится здесь">
+                    <button id="copy-btn" class="icon-btn" title="Копировать">
+                        <i class="far fa-copy"></i>
+                    </button>
+                    <button id="refresh-btn" class="icon-btn" title="Сгенерировать новый">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+                <div class="password-strength">
+                    <div class="strength-bar">
+                        <div class="strength-fill" id="strength-fill"></div>
+                    </div>
+                    <span class="strength-text" id="strength-text">Введите параметры</span>
+                </div>
+            </div>
+
+            <!-- Settings Panel -->
+            <div class="settings-panel">
+                <!-- Length Control -->
+                <div class="setting-group">
+                    <div class="setting-header">
+                        <label for="length">Длина пароля</label>
+                        <span class="length-value" id="length-value">16</span>
+                    </div>
+                    <input type="range" id="length" min="4" max="50" value="16" class="slider">
+                    <div class="slider-labels">
+                        <span>4</span>
+                        <span>50</span>
+                    </div>
+                </div>
+
+                <!-- Character Types -->
+                <div class="setting-group">
+                    <label class="setting-title">Типы символов</label>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="uppercase" checked>
+                            <span class="checkmark"></span>
+                            <span class="checkbox-label">
+                                <i class="fas fa-font"></i>
+                                Заглавные буквы
+                            </span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="numbers" checked>
+                            <span class="checkmark"></span>
+                            <span class="checkbox-label">
+                                <i class="fas fa-hashtag"></i>
+                                Цифры
+                            </span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="special" checked>
+                            <span class="checkmark"></span>
+                            <span class="checkbox-label">
+                                <i class="fas fa-asterisk"></i>
+                                Спецсимволы
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <button class="action-btn" data-length="12">
+                        <i class="fas fa-bolt"></i>
+                        Короткий (12)
+                    </button>
+                    <button class="action-btn" data-length="16">
+                        <i class="fas fa-shield-alt"></i>
+                        Стандарт (16)
+                    </button>
+                    <button class="action-btn" data-length="20">
+                        <i class="fas fa-lock"></i>
+                        Максимум (20)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Generate Button -->
+            <button id="generate-btn" class="generate-btn">
+                <i class="fas fa-key"></i>
+                Сгенерировать пароль
+            </button>
+
+            <!-- Security Tips -->
+            <div class="tips">
+                <h3><i class="fas fa-lightbulb"></i> Советы по безопасности</h3>
+                <ul>
+                    <li>Используйте пароли длиной не менее 12 символов</li>
+                    <li>Сочетайте разные типы символов</li>
+                    <li>Не используйте один пароль для разных сервисов</li>
+                    <li>Регулярно обновляйте важные пароли</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notification-text">Пароль скопирован!</span>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
