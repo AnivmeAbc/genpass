@@ -26,7 +26,7 @@
 - *secrets* - криптографически безопасная генерация случайных чисел
 
 ### Frontend
-![](https://img.shields.io/badge/HTMLl5-orange.svg)
+![](https://img.shields.io/badge/HTML5-orange.svg)
 ![](https://img.shields.io/badge/CSS3-blue.svg) 
 ![](https://img.shields.io/badge/JavaScript-yellow.svg)
 
