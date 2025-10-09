@@ -131,10 +131,6 @@
                                         </div>
                                         <span class="strength-text" id="strength-text">Сгенерируйте пароль</span>
                                     </div>
-                                    <div class="entropy-display">
-                                        <i class="fas fa-brain"></i>
-                                        <span>Энтропия: <strong id="entropy-value">0</strong> бит</span>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -166,16 +162,6 @@
                             </div>
                         </div>
 
-                        <div class="feedback-section">
-                            <h4>Рекомендации</h4>
-                            <div class="feedback-list" id="feedback-list">
-                                <div class="feedback-placeholder">
-                                    <i class="fas fa-info-circle"></i>
-                                    <span>Сгенерируйте пароль для получения рекомендаций</span>
-                                </div>
-                            </div>
-                        </div>
-
                         <button id="generate-btn" class="generate-btn">
                             <i class="fas fa-magic"></i>
                             Сгенерировать пароль
@@ -184,97 +170,7 @@
                 </div>
             </div>
 
-            <!-- Analyzer Tab -->
-            <div class="tab-content" id="analyzer">
-                <div class="content-header">
-                    <h2>Анализатор паролей</h2>
-                    <p>Проверьте безопасность существующих паролей</p>
-                </div>
-                <div class="analyzer-container">
-                    <div class="analyzer-input">
-                        <input type="password" id="analyze-password" placeholder="Введите пароль для анализа...">
-                        <button id="analyze-btn" class="analyze-btn">
-                            <i class="fas fa-search"></i>
-                            Анализировать
-                        </button>
-                    </div>
-                    <div class="analyzer-results" id="analyzer-results">
-                        <div class="results-placeholder">
-                            <i class="fas fa-shield-alt"></i>
-                            <h3>Проверьте свой пароль</h3>
-                            <p>Введите пароль выше для анализа его безопасности</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- В разделе History Tab -->
-            <div class="tab-content" id="history">
-                <div class="content-header">
-                    <div class="header-actions">
-                        <h2>История генераций</h2>
-                        <div class="history-controls">
-                            <button id="clear-history-btn" class="clear-history-btn" title="Очистить историю">
-                                <i class="fas fa-trash-alt"></i>
-                                Очистить историю
-                            </button>
-                        </div>
-                    </div>
-                    <p>Последние сгенерированные пароли</p>
-                </div>
-                <div class="history-container">
-                    <div class="history-stats" id="history-stats">
-                        <div class="stat-item">
-                            <i class="fas fa-key"></i>
-                            <span>Всего паролей: <strong id="total-passwords">0</strong></span>
-                        </div>
-                        <div class="stat-item">
-                            <i class="fas fa-calendar"></i>
-                            <span>Последний: <strong id="last-generated">-</strong></span>
-                        </div>
-                        <div class="stat-item">
-                            <i class="fas fa-shield-alt"></i>
-                            <span>Средняя длина: <strong id="avg-length">0</strong></span>
-                        </div>
-                    </div>
-                    <div class="history-list" id="history-list">
-                        <div class="empty-history">
-                            <i class="fas fa-history"></i>
-                            <h3>История пуста</h3>
-                            <p>Сгенерированные пароли появятся здесь</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Добавляем модальное окно подтверждения -->
-            <div id="clear-confirm-modal" class="modal">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3>Очистка истории</h3>
-                        <button class="modal-close">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <i class="fas fa-exclamation-triangle warning-icon"></i>
-                        <p>Вы уверены, что хотите очистить всю историю паролей? Это действие нельзя отменить.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button id="confirm-clear-btn" class="btn-danger">Очистить историю</button>
-                        <button id="cancel-clear-btn" class="btn-secondary">Отмена</button>
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <!-- Notifications -->
-    <div id="notification" class="notification">
-        <div class="notification-content">
-            <i class="fas fa-check-circle"></i>
-            <span id="notification-text"></span>
-        </div>
-    </div>
-
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
+
