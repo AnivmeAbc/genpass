@@ -150,10 +150,6 @@ def generate():
     # Анализ пароля
     strength_level, feedback = password_generator.check_password_strength(password)
     
-    # Расчет энтропии
-    char_set_size = len(set(characters)) if password_type == 'random' else 26
-    entropy = password_generator.calculate_entropy(password, char_set_size)
-    
     return jsonify({
         'password': password,
         'strength': strength_level['label'],
@@ -165,33 +161,8 @@ def generate():
         'timestamp': datetime.now().isoformat()
     })
 
-@app.route('/analyze', methods=['POST'])
-def analyze_password():
-    data = request.json
-    password = data.get('password', '')
-    
-    if not password:
-        return jsonify({'error': 'No password provided'})
-    
-    strength_level, feedback = password_generator.check_password_strength(password)
-    entropy = password_generator.calculate_entropy(password, 94)  # Примерный размер набора символов
-    
-    return jsonify({
-        'strength': strength_level['label'],
-        'color': strength_level['color'],
-        'score': strength_level['score'],
-        'feedback': feedback,
-        'entropy': entropy,
-        'length': len(password)
-    })
 
-@app.route('/history/clear', methods=['POST'])
-def clear_history():
-    return jsonify({'status': 'success', 'message': 'History cleared'})
-
-@app.route('/history/export', methods=['GET'])
-def export_history():
-    return jsonify({'status': 'success', 'message': 'Export functionality would be implemented here'})
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
+
