@@ -65,27 +65,6 @@ class PasswordGenerator:
         level = self.strength_levels[strength]
         
         return level
-    
-    # def generate_pronounceable_password(self, length=12):
-    #     """Генерация произносимого пароля"""
-    #     vowels = 'aeiou'
-    #     consonants = 'bcdfghjklmnpqrstvwxyz'
-    #     password = []
-        
-    #     for i in range(length):
-    #         if i % 2 == 0:
-    #             password.append(random.choice(consonants))
-    #         else:
-    #             password.append(random.choice(vowels))
-        
-    #     # Добавляем заглавные буквы и цифры
-    #     if length >= 4:
-    #         password[0] = password[0].upper()
-    #         if length >= 8:
-    #             password[random.randint(2, len(password)-2)] = random.choice(string.digits)
-        
-    #     return ''.join(password)
-    
 
 password_generator = PasswordGenerator()
 
@@ -130,3 +109,4 @@ def generate():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
+
