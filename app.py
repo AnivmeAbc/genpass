@@ -17,16 +17,9 @@ class PasswordGenerator:
             'very_strong': {'score': 8, 'color': '#4caf50', 'label': 'Очень сильный'}
         }
     
-    def calculate_entropy(self, password, char_set_size):
-        """Рассчитывает энтропию пароля"""
-        length = len(password)
-        entropy = length * (char_set_size.bit_length() / 2)
-        return round(entropy, 2)
-    
     def check_password_strength(self, password):
         """Расширенная проверка сложности пароля"""
         score = 0
-        feedback = []
         
         # Длина
         if len(password) >= 8:
@@ -71,47 +64,28 @@ class PasswordGenerator:
         
         level = self.strength_levels[strength]
         
-        # Генерируем фидбэк
-        if len(password) < 8:
-            feedback.append("Рекомендуется длина не менее 8 символов")
-        if not has_upper:
-            feedback.append("Добавьте заглавные буквы")
-        if not has_special:
-            feedback.append("Добавьте специальные символы")
-        
-        return level, feedback
+        return level
     
-    def generate_pronounceable_password(self, length=12):
-        """Генерация произносимого пароля"""
-        vowels = 'aeiou'
-        consonants = 'bcdfghjklmnpqrstvwxyz'
-        password = []
+    # def generate_pronounceable_password(self, length=12):
+    #     """Генерация произносимого пароля"""
+    #     vowels = 'aeiou'
+    #     consonants = 'bcdfghjklmnpqrstvwxyz'
+    #     password = []
         
-        for i in range(length):
-            if i % 2 == 0:
-                password.append(random.choice(consonants))
-            else:
-                password.append(random.choice(vowels))
+    #     for i in range(length):
+    #         if i % 2 == 0:
+    #             password.append(random.choice(consonants))
+    #         else:
+    #             password.append(random.choice(vowels))
         
-        # Добавляем заглавные буквы и цифры
-        if length >= 4:
-            password[0] = password[0].upper()
-            if length >= 8:
-                password[random.randint(2, len(password)-2)] = random.choice(string.digits)
+    #     # Добавляем заглавные буквы и цифры
+    #     if length >= 4:
+    #         password[0] = password[0].upper()
+    #         if length >= 8:
+    #             password[random.randint(2, len(password)-2)] = random.choice(string.digits)
         
-        return ''.join(password)
+    #     return ''.join(password)
     
-    def generate_memorable_password(self, word_count=4):
-        """Генерация запоминающегося пароля из слов"""
-        words = [
-            'apple', 'banana', 'cherry', 'dragon', 'elephant', 'forest', 
-            'garden', 'hammer', 'island', 'jupiter', 'knight', 'lighthouse',
-            'mountain', 'nebula', 'ocean', 'panda', 'quantum', 'river',
-            'sunset', 'tiger', 'universe', 'volcano', 'waterfall', 'xylophone',
-            'yellow', 'zeppelin'
-        ]
-        selected_words = random.sample(words, word_count)
-        return '-'.join(selected_words) + str(random.randint(10, 99))
 
 password_generator = PasswordGenerator()
 
@@ -128,11 +102,7 @@ def generate():
     use_special = data.get('special', True)
     password_type = data.get('type', 'random')
     
-    if password_type == 'pronounceable':
-        password = password_generator.generate_pronounceable_password(length)
-    elif password_type == 'memorable':
-        password = password_generator.generate_memorable_password(length // 4)
-    else:
+    if password_type == 'random':
         # Стандартная генерация
         characters = string.ascii_lowercase
         if use_uppercase:
@@ -148,21 +118,15 @@ def generate():
         password = ''.join(secrets.choice(characters) for _ in range(length))
     
     # Анализ пароля
-    strength_level, feedback = password_generator.check_password_strength(password)
+    strength_level = password_generator.check_password_strength(password)
     
     return jsonify({
         'password': password,
         'strength': strength_level['label'],
         'color': strength_level['color'],
         'score': strength_level['score'],
-        'feedback': feedback,
-        'entropy': entropy,
         'length': len(password),
-        'timestamp': datetime.now().isoformat()
     })
-
-
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
-
