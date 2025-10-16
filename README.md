@@ -103,7 +103,9 @@ genpass/
 
   - *Пароль будет скопирован в буфер обмена*
 
-<img width="1918" height="946" alt="image" src="https://github.com/user-attachments/assets/03252c92-893e-4708-84e5-2e1647b6c5a2" />
+<img width="1916" height="928" alt="image" src="https://github.com/user-attachments/assets/df5d36da-a8fe-49a7-ac29-260040651e67" />
+
+
 
 
 ## 📝 Лицензия
