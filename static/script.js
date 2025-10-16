@@ -83,6 +83,10 @@ class PasswordManager {
                     return; // Позволяем браузеру перейти по ссылке профиля
                 }
                 
+                // if (item.classList.contains('admin') || item.href && item.href.includes('/admin')) {
+                //     return; // Позволяем браузеру перейти по ссылке профиля
+                // }
+
                 e.preventDefault();
                 this.switchTab(item.dataset.tab);
             });
