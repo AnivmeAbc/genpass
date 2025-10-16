@@ -1043,3 +1043,915 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--primary);
 }
+
+/* Main Content */
+.login-content {
+    flex: 1;
+    padding: 32px;
+    overflow-y: auto;
+}
+
+.content-header {
+    margin-bottom: 32px;
+}
+
+.content-header h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.content-header p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+/* Tab Content */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Стили для страницы авторизации */
+.login-page {
+    background: var(--gradient-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 440px;
+}
+
+.login-card {
+    background: var(--bg-surface);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-light);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: var(--shadow-xl);
+    animation: slideUp 0.6s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.login-header .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.login-header .logo i {
+    font-size: 2.5rem;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.login-header .logo-text h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.login-header .logo-text span {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--primary);
+    background: var(--bg-tertiary);
+    padding: 4px 12px;
+    border-radius: 12px;
+    margin-left: 8px;
+}
+
+.login-subtitle {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin: 0;
+    font-weight: 400;
+}
+
+/* Flash сообщения */
+.flash-messages {
+    margin-bottom: 24px;
+}
+
+.flash-message {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+}
+
+.flash-message.success {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: var(--secondary);
+}
+
+.flash-message.error {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: var(--danger);
+}
+
+.flash-message.info {
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    color: var(--info);
+}
+
+.flash-message i {
+    font-size: 1.2rem;
+}
+
+/* Форма авторизации */
+.login-form {
+    margin-bottom: 32px;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-primary);
+    font-weight: 500;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.form-label i {
+    color: var(--primary);
+    width: 16px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 16px 20px;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-light);
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: var(--bg-tertiary);
+}
+
+.form-input::placeholder {
+    color: var(--text-muted);
+}
+
+/* Кнопка входа */
+.login-btn {
+    width: 100%;
+    padding: 18px 24px;
+    background: var(--gradient-primary);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    box-shadow: var(--shadow-lg);
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl);
+}
+
+.login-btn:active {
+    transform: translateY(0);
+}
+
+/* Информация о тестовых пользователях */
+.login-info {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.login-info h3 {
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.test-accounts {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.account-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.account-item strong {
+    color: var(--text-primary);
+}
+
+.account-item span {
+    color: var(--text-secondary);
+    font-family: 'Courier New', monospace;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+/* Футер авторизации */
+.login-footer {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-light);
+}
+
+.security-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.security-status i {
+    font-size: 1rem;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 480px) {
+    .login-container {
+        padding: 10px;
+    }
+    
+    .login-card {
+        padding: 24px;
+    }
+    
+    .login-header .logo {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .login-header .logo-text h1 {
+        font-size: 1.8rem;
+    }
+    
+    .account-item {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+}
+
+/* Анимация появления элементов формы */
+.form-group {
+    animation: fadeInUp 0.6s ease forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.form-group:nth-child(1) { animation-delay: 0.1s; }
+.form-group:nth-child(2) { animation-delay: 0.2s; }
+.login-btn { animation-delay: 0.3s; }
+.login-info { animation-delay: 0.4s; }
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Стили для информации о пользователе в сайдбаре */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border-light);
+    margin-bottom: 16px;
+}
+
+.user-avatar {
+    font-size: 2.5rem;
+    color: var(--primary);
+}
+
+.user-details {
+    flex: 1;
+}
+
+.username {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+.user-role {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.role-badge {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.role-badge.admin {
+    background: var(--primary);
+    color: white;
+}
+
+.role-badge.user {
+    background: var(--secondary);
+    color: white;
+}
+
+/* Стиль для кнопки выхода */
+.nav-item.logout {
+    color: var(--danger);
+}
+
+.nav-item.logout:hover {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--danger);
+}
+
+.nav-item.logout.active {
+    background: var(--danger);
+    color: white;
+}
+
+/* Дополнительные стили для страницы регистрации */
+.form-hint {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-style: italic;
+}
+
+.auth-links {
+    text-align: center;
+    margin-bottom: 24px;
+    padding: 16px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+}
+
+.auth-links p {
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.auth-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.auth-link:hover {
+    color: var(--primary-light);
+    text-decoration: underline;
+}
+
+.security-features {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.feature-item i {
+    color: var(--primary);
+    width: 16px;
+    text-align: center;
+}
+
+.feature-item span {
+    color: var(--text-secondary);
+}
+
+/* Анимации для формы регистрации */
+.login-form .form-group {
+    animation: fadeInUp 0.6s ease forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.login-form .form-group:nth-child(1) { animation-delay: 0.1s; }
+.login-form .form-group:nth-child(2) { animation-delay: 0.2s; }
+.login-form .form-group:nth-child(3) { animation-delay: 0.3s; }
+.login-form .form-group:nth-child(4) { animation-delay: 0.4s; }
+.login-btn { animation-delay: 0.5s; }
+.auth-links { animation-delay: 0.6s; }
+.login-info { animation-delay: 0.7s; }
+
+/* Индикаторы валидации */
+.form-input:valid {
+    border-color: var(--secondary);
+}
+
+.form-input:invalid:not(:focus):not(:placeholder-shown) {
+    border-color: var(--danger);
+}
+
+/* Адаптивность для длинных форм */
+@media (max-width: 480px) {
+    .login-card {
+        padding: 20px;
+    }
+    
+    .security-features {
+        font-size: 0.8rem;
+    }
+    
+    .feature-item {
+        padding: 8px;
+    }
+}
+
+/* Стили для страницы профиля */
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 800px;
+}
+
+.profile-section {
+    background: var(--bg-surface);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow-lg);
+}
+
+.profile-section.danger-zone {
+    border-color: var(--danger);
+    background: rgba(239, 68, 68, 0.05);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.section-header h3 {
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.section-header i {
+    color: var(--primary);
+    font-size: 1.1rem;
+}
+
+.danger-zone .section-header i {
+    color: var(--danger);
+}
+
+/* Информация о профиле */
+.profile-info {
+    display: grid;
+    gap: 16px;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-item label {
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.info-value {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* Формы профиля */
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profile-btn {
+    padding: 14px 24px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    align-self: flex-start;
+}
+
+.profile-btn.primary {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.profile-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.profile-btn.danger {
+    background: var(--danger);
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.profile-btn.danger:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Опасная зона */
+.danger-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.warning-text {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 12px;
+    color: var(--danger);
+    font-weight: 500;
+}
+
+.warning-text i {
+    font-size: 1.2rem;
+}
+
+/* Анимации */
+.profile-section {
+    animation: slideUp 0.5s ease forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.profile-section:nth-child(1) { animation-delay: 0.1s; }
+.profile-section:nth-child(2) { animation-delay: 0.2s; }
+.profile-section:nth-child(3) { animation-delay: 0.3s; }
+.profile-section:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes slideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .profile-container {
+        gap: 16px;
+    }
+    
+    .profile-section {
+        padding: 20px;
+    }
+    
+    .info-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .profile-btn {
+        align-self: stretch;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+}
+
+/* Дополнительные стили для форм */
+.form-group {
+    margin-bottom: 0;
+}
+
+.form-input:focus {
+    border-color: var(--primary);
+    background: var(--bg-tertiary);
+}
+
+.danger-zone .form-input:focus {
+    border-color: var(--danger);
+}
+
+/* Стили для flash сообщений в основном контенте */
+.main-content .flash-messages {
+    margin-bottom: 24px;
+}
+
+.main-content .flash-message {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+}
+
+.main-content .flash-message.success {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: var(--secondary);
+}
+
+.main-content .flash-message.error {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: var(--danger);
+}
+
+.main-content .flash-message.info {
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    color: var(--info);
+}
+
+/* Стили для выровненной формы логина */
+.login-info h3 {
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.test-accounts-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.account-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+}
+
+.account-label {
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.account-credentials {
+    color: var(--text-secondary);
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+/* Улучшаем выравнивание формы */
+.login-form {
+    margin-bottom: 24px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-primary);
+    font-weight: 500;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 14px 16px;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-light);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: var(--bg-tertiary);
+}
+
+.login-btn {
+    width: 100%;
+    padding: 16px 24px;
+    background: var(--gradient-primary);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: var(--shadow-md);
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Улучшаем выравнивание заголовка */
+.login-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.login-header .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.login-header .logo-text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.login-header .logo-text h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.login-header .logo-text span {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--primary);
+    background: var(--bg-tertiary);
+    padding: 4px 8px;
+    border-radius: 8px;
+}
+
+.login-subtitle {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin: 0;
+    font-weight: 400;
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 480px) {
+    .account-row {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+    
+    .account-label,
+    .account-credentials {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .login-header .logo {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .login-header .logo-text {
+        flex-direction: column;
+        gap: 4px;
+    }
+}
