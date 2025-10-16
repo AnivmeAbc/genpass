@@ -22,22 +22,40 @@
                 </div>
             </div>
 
+            <!-- Информация о пользователе -->
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="user-details">
+                    <div class="username">{{ username }}</div>
+                    <div class="user-role">
+                        {% if session.get('role') == 'admin' %}
+                            <span class="role-badge admin">Администратор</span>
+                        {% else %}
+                            <span class="role-badge user">Пользователь</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
             <nav class="sidebar-nav">
-                <a href="#" class="nav-item active" data-tab="generator">
+                <a href="{{ url_for('dashboard') }}" class="nav-item active" data-tab="generator">
                     <i class="fas fa-key"></i>
                     <span>Генератор</span>
                 </a>
+                <a href="{{ url_for('profile') }}" class="nav-item profile">
+                    <i class="fas fa-user"></i>
+                    <span>Профиль</span>
+                </a>
+                <a href="{{ url_for('logout') }}" class="nav-item logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Выйти</span>
+                </a>
             </nav>
-
-            <div class="sidebar-footer">
-                <div class="security-status">
-                    <i class="fas fa-lock"></i>
-                    <span>Защищено</span>
-                </div>
-            </div>
         </aside>
 
-        <!-- Main Content -->
+        <!-- Основной контент остается без изменений -->
         <main class="main-content">
             <!-- Generator Tab -->
             <div class="tab-content active" id="generator">
@@ -131,8 +149,17 @@
                     </div>
                 </div>
             </div>
+        </main>
+    </div>
+
+    <!-- Уведомления -->
+    <div id="notification" class="notification">
+        <div class="notification-content">
+            <i class="fas fa-check-circle"></i>
+            <span id="notification-text"></span>
+        </div>
+    </div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
-
