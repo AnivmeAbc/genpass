@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecurePass | Профиль</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="desktop-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <div class="logo-text">
+                        <h1>SecurePass</h1>
+                        <span>V 0.1</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Информация о пользователе -->
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="user-details">
+                    <div class="username">{{ username }}</div>
+                    <div class="user-role">
+                        {% if session.get('role') == 'admin' %}
+                            <span class="role-badge admin">Администратор</span>
+                        {% else %}
+                            <span class="role-badge user">Пользователь</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="{{ url_for('dashboard') }}" class="nav-item">
+                    <i class="fas fa-key"></i>
+                    <span>Генератор</span>
+                </a>
+                <a href="{{ url_for('profile') }}" class="nav-item active">
+                    <i class="fas fa-user"></i>
+                    <span>Профиль</span>
+                </a>
+                {% if session.get('role') == 'admin' %}
+                <a href="{{ url_for('admin') }}" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Админ-панель</span>
+                </a>
+                {% endif %}
+                <a href="{{ url_for('logout') }}" class="nav-item logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Выйти</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Основной контент -->
+        <main class="main-content">
+            <div class="content-header">
+                <h2>Профиль пользователя</h2>
+                <p>Управление вашей учетной записью и настройками</p>
+            </div>
+
+            <!-- Сообщения flash -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="flash-message {{ category }}">
+                                <i class="fas fa-{% if category == 'success' %}check-circle{% elif category == 'error' %}exclamation-circle{% else %}info-circle{% endif %}"></i>
+                                <span>{{ message }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <div class="profile-container">
+                <!-- Информация о профиле -->
+                <div class="profile-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-id-card"></i> Информация о профиле</h3>
+                    </div>
+                    <div class="profile-info">
+                        <div class="info-item">
+                            <label>Имя пользователя:</label>
+                            <span class="info-value">{{ username }}</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Email:</label>
+                            <span class="info-value">{{ email }}</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Роль:</label>
+                            <span class="info-value">
+                                {% if session.get('role') == 'admin' %}
+                                    <span class="role-badge admin">Администратор</span>
+                                {% else %}
+                                    <span class="role-badge user">Пользователь</span>
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div class="info-item">
+                            <label>Дата регистрации:</label>
+                            <span class="info-value">
+                                {% if user_data and user_data.created_at %}
+                                    {{ user_data.created_at[:10] }}
+                                {% else %}
+                                    Неизвестно
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Редактирование профиля -->
+                <div class="profile-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-edit"></i> Редактирование профиля</h3>
+                    </div>
+                    <form class="profile-form" method="POST">
+                        <input type="hidden" name="action" value="update_profile">
+                        
+                        <div class="form-group">
+                            <label for="username" class="form-label">
+                                <i class="fas fa-user"></i>
+                                Имя пользователя
+                            </label>
+                            <input type="text" 
+                                   id="username" 
+                                   name="username" 
+                                   class="form-input"
+                                   value="{{ username }}"
+                                   required
+                                   minlength="3"
+                                   maxlength="20"
+                                   pattern="[a-zA-Z0-9]+"
+                                   title="Только буквы и цифры, минимум 3 символа">
+                            <div class="form-hint">Только буквы и цифры, минимум 3 символа</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="form-label">
+                                <i class="fas fa-envelope"></i>
+                                Email адрес
+                            </label>
+                            <input type="email" 
+                                   id="email" 
+                                   name="email" 
+                                   class="form-input"
+                                   value="{{ email }}"
+                                   required>
+                            <div class="form-hint">Будет использоваться для восстановления пароля</div>
+                        </div>
+
+                        <button type="submit" class="profile-btn primary">
+                            <i class="fas fa-save"></i>
+                            Сохранить изменения
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Смена пароля -->
+                <div class="profile-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-key"></i> Смена пароля</h3>
+                    </div>
+                    <form class="profile-form" method="POST">
+                        <input type="hidden" name="action" value="change_password">
+                        
+                        <div class="form-group">
+                            <label for="current_password" class="form-label">
+                                <i class="fas fa-lock"></i>
+                                Текущий пароль
+                            </label>
+                            <input type="password" 
+                                   id="current_password" 
+                                   name="current_password" 
+                                   class="form-input"
+                                   required
+                                   minlength="6">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="new_password" class="form-label">
+                                <i class="fas fa-lock"></i>
+                                Новый пароль
+                            </label>
+                            <input type="password" 
+                                   id="new_password" 
+                                   name="new_password" 
+                                   class="form-input"
+                                   required
+                                   minlength="6">
+                            <div class="form-hint">Минимум 6 символов</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirm_password" class="form-label">
+                                <i class="fas fa-lock"></i>
+                                Подтверждение пароля
+                            </label>
+                            <input type="password" 
+                                   id="confirm_password" 
+                                   name="confirm_password" 
+                                   class="form-input"
+                                   required
+                                   minlength="6">
+                            <div class="form-hint">Пароли должны совпадать</div>
+                        </div>
+
+                        <button type="submit" class="profile-btn primary">
+                            <i class="fas fa-key"></i>
+                            Сменить пароль
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Опасная зона -->
+                <div class="profile-section danger-zone">
+                    <div class="section-header">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Опасная зона</h3>
+                    </div>
+                    <div class="danger-content">
+                        <p class="warning-text">
+                            <i class="fas fa-exclamation-circle"></i>
+                            Эти действия необратимы. Пожалуйста, действуйте осторожно.
+                        </p>
+                        
+                        <form class="profile-form" method="POST" onsubmit="return confirmDelete()">
+                            <input type="hidden" name="action" value="delete_account">
+                            
+                            <div class="form-group">
+                                <label for="confirm_text" class="form-label">
+                                    <i class="fas fa-trash-alt"></i>
+                                    Удаление аккаунта
+                                </label>
+                                <input type="text" 
+                                       id="confirm_text" 
+                                       name="confirm_text" 
+                                       class="form-input"
+                                       placeholder='Введите "{{ username }}" для подтверждения'
+                                       required>
+                                <div class="form-hint">
+                                    Введите ваше имя пользователя для подтверждения удаления аккаунта. 
+                                    Все ваши данные будут безвозвратно удалены.
+                                </div>
+                            </div>
+
+                            <button type="submit" class="profile-btn danger">
+                                <i class="fas fa-trash-alt"></i>
+                                Удалить аккаунт
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Подтверждение удаления аккаунта
+        function confirmDelete() {
+            const username = "{{ username }}";
+            return confirm(`ВНИМАНИЕ! Вы собираетесь удалить свой аккаунт "${username}". Это действие необратимо. Все ваши данные будут удалены. Продолжить?`);
+        }
+
+        // Валидация паролей в реальном времени
+        document.addEventListener('DOMContentLoaded', function() {
+            const newPassword = document.getElementById('new_password');
+            const confirmPassword = document.getElementById('confirm_password');
+
+            function validatePasswords() {
+                if (newPassword.value && confirmPassword.value) {
+                    if (newPassword.value !== confirmPassword.value) {
+                        confirmPassword.style.borderColor = 'var(--danger)';
+                    } else {
+                        confirmPassword.style.borderColor = 'var(--secondary)';
+                    }
+                }
+            }
+
+            if (newPassword && confirmPassword) {
+                newPassword.addEventListener('input', validatePasswords);
+                confirmPassword.addEventListener('input', validatePasswords);
+            }
+
+            // Валидация имени пользователя
+            const username = document.getElementById('username');
+            if (username) {
+                username.addEventListener('input', function() {
+                    const pattern = /^[a-zA-Z0-9]+$/;
+                    if (this.value && !pattern.test(this.value)) {
+                        this.style.borderColor = 'var(--danger)';
+                    } else {
+                        this.style.borderColor = '';
+                    }
+                });
+            }
+
+            // Автоматическое скрытие flash сообщений
+            const flashMessages = document.querySelectorAll('.flash-message');
+            flashMessages.forEach(message => {
+                setTimeout(() => {
+                    message.style.opacity = '0';
+                    message.style.transform = 'translateY(-10px)';
+                    setTimeout(() => message.remove(), 300);
+                }, 5000);
+            });
+        });
+    </script>
+</body>
+</html>
