@@ -19,12 +19,5 @@
     "email": "anivme@example.com",
     "role": "admin",
     "created_at": "2025-10-11T19:03:49.024963"
-  },
-  {
-    "username": "eblan",
-    "password": "FC!DG5r.#ech8qG",
-    "email": "Marshmellow1234@yandex.ru",
-    "role": "user",
-    "created_at": "2025-10-13T13:07:46.557858"
   }
 ]
