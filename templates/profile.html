@@ -51,7 +51,6 @@
                 {% if session.get('role') == 'admin' %}
                 <a href="{{ url_for('admin') }}" class="nav-item">
                     <i class="fas fa-cog"></i>
-                    <span>Админ-панель</span>
                 </a>
                 {% endif %}
                 <a href="{{ url_for('logout') }}" class="nav-item logout">
