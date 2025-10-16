@@ -325,7 +325,13 @@ def logout():
     flash('Вы вышли из системы', 'info')
     return redirect(url_for('login'))
 
-
+@app.route('/admin')
+@login_required
+def admin():
+    if session.get('role') != 'admin':
+        flash('У вас нет прав для доступа к этой странице', 'error')
+        return redirect(url_for('index'))
+    return render_template('admin.html', username=session.get('username'))
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
