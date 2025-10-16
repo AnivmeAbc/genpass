@@ -65,11 +65,24 @@ class PasswordManager {
 
         // Генератор паролей
         this.bindGeneratorEvents();
+
+        // Глобальные события
+        this.bindGlobalEvents();
     }
 
     bindNavigation() {
         document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', (e) => {
+                // Для ссылки выхода не предотвращаем переход
+                if (item.classList.contains('logout')) {
+                    return; // Позволяем браузеру перейти по ссылке
+                }
+                
+                // Для ссылки профиля - переходим на страницу профиля
+                if (item.classList.contains('profile') || item.href && item.href.includes('/profile')) {
+                    return; // Позволяем браузеру перейти по ссылке профиля
+                }
+                
                 e.preventDefault();
                 this.switchTab(item.dataset.tab);
             });
@@ -102,24 +115,31 @@ class PasswordManager {
 
     bindGeneratorEvents() {
         // Основная кнопка генерации
-        document.getElementById('generate-btn').addEventListener('click', () => this.generatePassword());
-        document.getElementById('refresh-btn').addEventListener('click', () => this.generatePassword());
-
-        // // Копирование
-        // document.getElementById('copy-btn').addEventListener('click', () => this.copyPassword());
+        const generateBtn = document.getElementById('generate-btn');
+        if (generateBtn) {
+            generateBtn.addEventListener('click', () => this.generatePassword());
+        }
+        
+        // Копирование
+        const copyBtn = document.getElementById('copy-btn');
+        if (copyBtn) {
+            copyBtn.addEventListener('click', () => this.copyPassword());
+        }
 
         // Слайдер длины
         const lengthSlider = document.getElementById('length');
         const lengthValue = document.getElementById('length-value');
         
-        lengthSlider.addEventListener('input', (e) => {
-            lengthValue.textContent = e.target.value;
-            // Автогенерация при изменении длины
-            if (this.settings.autoGenerate) {
-                clearTimeout(this.autoGenerateTimeout);
-                this.autoGenerateTimeout = setTimeout(() => this.generatePassword(), 300);
-            }
-        });
+        if (lengthSlider && lengthValue) {
+            lengthSlider.addEventListener('input', (e) => {
+                lengthValue.textContent = e.target.value;
+                // Автогенерация при изменении длины
+                if (this.settings.autoGenerate) {
+                    clearTimeout(this.autoGenerateTimeout);
+                    this.autoGenerateTimeout = setTimeout(() => this.generatePassword(), 300);
+                }
+            });
+        }
 
         // Типы паролей
         document.querySelectorAll('.type-option').forEach(option => {
@@ -132,10 +152,13 @@ class PasswordManager {
 
         // Настройки символов
         ['uppercase', 'numbers', 'special'].forEach(type => {
-            document.getElementById(type).addEventListener('change', () => {
-                this.validateCharacterSettings();
-                this.generatePassword();
-            });
+            const element = document.getElementById(type);
+            if (element) {
+                element.addEventListener('change', () => {
+                    this.validateCharacterSettings();
+                    this.generatePassword();
+                });
+            }
         });
 
         // Быстрые пресеты
@@ -160,11 +183,14 @@ class PasswordManager {
         });
 
         // Генерация по Enter в поле пароля
-        document.getElementById('password').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                this.generatePassword();
-            }
-        });
+        const passwordField = document.getElementById('password');
+        if (passwordField) {
+            passwordField.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    this.generatePassword();
+                }
+            });
+        }
     }
 
     bindGlobalEvents() {
@@ -196,16 +222,39 @@ class PasswordManager {
         window.addEventListener('offline', () => {
             this.showNotification('Отсутствует соединение', 'warning');
         });
+
+        // Обработка кнопки выхода с подтверждением
+        this.bindLogoutEvent();
+    }
+
+    bindLogoutEvent() {
+        const logoutBtn = document.querySelector('.nav-item.logout');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.confirmLogout();
+            });
+        }
+    }
+
+    confirmLogout() {
+        if (confirm('Вы уверены, что хотите выйти из системы?')) {
+            // Перенаправляем на страницу выхода
+            window.location.href = '/logout';
+        }
     }
 
     validateCharacterSettings() {
-        const uppercase = document.getElementById('uppercase').checked;
-        const numbers = document.getElementById('numbers').checked;
-        const special = document.getElementById('special').checked;
+        const uppercase = document.getElementById('uppercase')?.checked;
+        const numbers = document.getElementById('numbers')?.checked;
+        const special = document.getElementById('special')?.checked;
 
         // Если ничего не выбрано, автоматически включаем буквы
         if (!uppercase && !numbers && !special) {
-            document.getElementById('uppercase').checked = true;
+            const uppercaseElement = document.getElementById('uppercase');
+            if (uppercaseElement) {
+                uppercaseElement.checked = true;
+            }
         }
     }
 
@@ -214,11 +263,9 @@ class PasswordManager {
         
         this.isGenerating = true;
         const generateBtn = document.getElementById('generate-btn');
-        const refreshBtn = document.getElementById('refresh-btn');
         
         // Визуальная индикация процесса
         this.setButtonState(generateBtn, true);
-        this.setButtonState(refreshBtn, true);
 
         const settings = this.getSettings();
         
@@ -255,7 +302,6 @@ class PasswordManager {
         } finally {
             this.isGenerating = false;
             this.setButtonState(generateBtn, false);
-            this.setButtonState(refreshBtn, false);
         }
     }
 
@@ -339,20 +385,26 @@ class PasswordManager {
         const analysisTime = document.getElementById('analysis-time');
         const feedbackList = document.getElementById('feedback-list');
 
+        if (!passwordField) return;
+
         // Анимация появления пароля
         this.animatePasswordDisplay(passwordField, data.password);
 
         // Обновление индикатора сложности
-        this.updateStrengthIndicator(strengthFill, strengthText, data);
+        if (strengthFill && strengthText) {
+            this.updateStrengthIndicator(strengthFill, strengthText, data);
+        }
 
         // Обновление статистики
-        entropyValue.textContent = data.entropy;
-        analysisLength.textContent = data.length;
-        analysisComplexity.textContent = data.strength;
-        analysisTime.textContent = this.calculateCrackTime(data.entropy);
+        if (entropyValue) entropyValue.textContent = data.entropy;
+        if (analysisLength) analysisLength.textContent = data.length;
+        if (analysisComplexity) analysisComplexity.textContent = data.strength;
+        if (analysisTime) analysisTime.textContent = this.calculateCrackTime(data.entropy);
 
         // Обновление рекомендаций
-        this.displayFeedback(data.feedback, feedbackList);
+        if (feedbackList) {
+            this.displayFeedback(data.feedback, feedbackList);
+        }
 
         // Сохранение текущего пароля
         this.currentPassword = data.password;
@@ -382,6 +434,19 @@ class PasswordManager {
         
         text.textContent = data.strength;
         text.style.color = data.color;
+    }
+
+    calculateCrackTime(entropy) {
+        const guessesPerSecond = 1e9; // 1 миллиард попыток в секунду
+        const combinations = Math.pow(2, entropy);
+        const seconds = combinations / guessesPerSecond;
+
+        if (seconds < 60) return '< 1 минуты';
+        if (seconds < 3600) return `${Math.ceil(seconds / 60)} мин`;
+        if (seconds < 86400) return `${Math.ceil(seconds / 3600)} ч`;
+        if (seconds < 31536000) return `${Math.ceil(seconds / 86400)} дн`;
+        if (seconds < 315360000) return `${Math.ceil(seconds / 31536000)} лет`;
+        return 'Миллионы лет';
     }
 
     displayFeedback(feedback, container) {
@@ -458,12 +523,35 @@ class PasswordManager {
         const activeType = document.querySelector('.type-option.active')?.dataset.type || 'random';
         
         return {
-            length: parseInt(document.getElementById('length').value),
-            uppercase: document.getElementById('uppercase').checked,
-            numbers: document.getElementById('numbers').checked,
-            special: document.getElementById('special').checked,
+            length: parseInt(document.getElementById('length')?.value || 16),
+            uppercase: document.getElementById('uppercase')?.checked || true,
+            numbers: document.getElementById('numbers')?.checked || true,
+            special: document.getElementById('special')?.checked || true,
             type: activeType
         };
+    }
+
+    addToHistory(passwordData) {
+        const historyItem = {
+            ...passwordData,
+            id: Date.now(),
+            timestamp: new Date().toLocaleString('ru-RU'),
+            date: new Date().toISOString(),
+            type: this.getSettings().type
+        };
+
+        this.history.unshift(historyItem);
+        this.history = this.history.slice(0, 100); // Ограничиваем историю
+        this.saveHistory();
+        this.loadHistory();
+    }
+
+    saveHistory() {
+        localStorage.setItem('passwordHistory', JSON.stringify(this.history));
+    }
+
+    loadHistory() {
+        // Загрузка истории (если нужно)
     }
 
     // Утилиты
@@ -481,8 +569,23 @@ class PasswordManager {
     }
 
     showNotification(message, type = 'success') {
-        const notification = document.getElementById('notification');
-        const notificationText = document.getElementById('notification-text');
+        // Создаем уведомление если его нет
+        let notification = document.getElementById('notification');
+        let notificationText = document.getElementById('notification-text');
+        
+        if (!notification) {
+            notification = document.createElement('div');
+            notification.id = 'notification';
+            notification.className = 'notification';
+            notification.innerHTML = `
+                <div class="notification-content">
+                    <i class="fas fa-check-circle"></i>
+                    <span id="notification-text"></span>
+                </div>
+            `;
+            document.body.appendChild(notification);
+            notificationText = document.getElementById('notification-text');
+        }
         
         if (!notification || !notificationText) return;
         
@@ -499,6 +602,7 @@ class PasswordManager {
     }
 
     animateButton(button) {
+        if (!button) return;
         button.style.transform = 'scale(0.95)';
         setTimeout(() => {
             button.style.transform = 'scale(1)';
@@ -526,9 +630,11 @@ class PasswordManager {
 document.addEventListener('DOMContentLoaded', () => {
     const passwordManager = new PasswordManager();
     
-    // Восстанавливаем активную вкладку
-    const savedTab = localStorage.getItem('activeTab') || 'generator';
-    passwordManager.switchTab(savedTab);
+    // Восстанавливаем активную вкладку только если мы на главной странице
+    if (window.location.pathname === '/dashboard' || window.location.pathname === '/') {
+        const savedTab = localStorage.getItem('activeTab') || 'generator';
+        passwordManager.switchTab(savedTab);
+    }
     
     // Добавляем глобальный доступ для отладки
     window.passwordManager = passwordManager;
