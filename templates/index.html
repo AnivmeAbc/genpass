@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Менеджер паролей</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .password-form { background: #f5f5f5; padding: 15px; margin: 20px 0; }
+        .password-item { 
+            background: white; 
+            padding: 15px; 
+            margin: 10px 0; 
+            border: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .password-info { flex: 1; }
+        .password-actions { margin-left: 15px; }
+        .btn { 
+            padding: 8px 12px; 
+            background: #007bff; 
+            color: white; 
+            text-decoration: none; 
+            border: none; 
+            cursor: pointer; 
+            display: inline-block;
+        }
+        .btn-danger { background: #dc3545; }
+        input[type="text"] { 
+            padding: 8px; 
+            margin: 5px; 
+            width: 200px; 
+        }
+        .anivme-label {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            color: #000000;
+            font-size: 16px;
+            font-style: italic;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Менеджер паролей</h1>
+            <div>
+                <span>Добро пожаловать, {{ session.username }}!</span>
+                <a href="{{ url_for('logout') }}" class="btn">Выйти</a>
+            </div>
+        </div>
+
+        <div class="password-form">
+            <h3>Добавить новый пароль</h3>
+            <form method="POST" action="{{ url_for('add_password') }}">
+                <input type="text" name="service" placeholder="Название сервиса" required>
+                <input type="text" name="username" placeholder="Логин" required>
+                <input type="text" name="password" placeholder="Пароль" required>
+                <button type="submit" class="btn">Добавить</button>
+            </form>
+        </div>
+
+        <h2>Сохраненные пароли</h2>
+        {% for password in passwords %}
+        <div class="password-item">
+            <div class="password-info">
+                <strong>Сервис:</strong> {{ password[0] }}<br>
+                <strong>Логин:</strong> {{ password[1] }}<br>
+                <strong>Пароль:</strong> {{ password[2] }}
+            </div>
+            <div class="password-actions">
+                <a href="{{ url_for('delete_password', password_id=loop.index) }}" class="btn btn-danger">Удалить</a>
+            </div>
+        </div>
+        {% else %}
+        <p>Нет сохраненных паролей</p>
+        {% endfor %}
+
+        <div class="anivme-label">
+        Тихонов Егор
+            </div>
+    </div>
+</body>
+</html>
