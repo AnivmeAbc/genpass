@@ -67,7 +67,7 @@ genpass/
 ├── templates/
 │   ├── index.html      # Главная страница
 │   ├── login.html      # Страница авторизации
-│   ├── register.html   # Страница регистрации
+│   └── register.html   # Страница регистрации
 ├── passwords/
 └── README.md           # Документация
 ```
