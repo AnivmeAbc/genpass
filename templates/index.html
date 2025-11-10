@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Менеджер паролей</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .password-form { background: #f5f5f5; padding: 15px; margin: 20px 0; }
+        .password-item { 
+            background: white; 
+            padding: 15px; 
+            margin: 10px 0; 
+            border: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .password-info { flex: 1; }
+        .password-actions { margin-left: 15px; }
+        .btn { 
+            padding: 8px 12px; 
+            background: #007bff; 
+            color: white; 
+            text-decoration: none; 
+            border: none; 
+            cursor: pointer; 
+            display: inline-block;
+        }
+        .btn-danger { background: #dc3545; }
+        input[type="text"] { 
+            padding: 8px; 
+            margin: 5px; 
+            width: 200px; 
+        }
+        .anivme-label {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            color: #000000;
+            font-size: 16px;
+            font-style: italic;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Менеджер паролей</h1>
+            <div>
+                <span>Привет, {{ session.username }}!</span>
+                <a href="{{ url_for('logout') }}" class="logout-btn" style="margin-left: 10px; text-decoration: none; color: white; padding: 8px 15px; background: #0088ff; border-radius: 4px;">Выйти</a>
+            </div>
+        </div>
+
+        <!-- Flash сообщения -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Форма добавления пароля -->
+        <div class="password-form">
+            <h3>Добавить новый пароль</h3>
+            <form method="POST" action="{{ url_for('add_password') }}">
+                <input type="text" name="service" placeholder="Сервис (например: Google)" required>
+                <input type="text" name="username" placeholder="Имя пользователя" required>
+                <input type="text" name="password" placeholder="Пароль" required>
+                <button type="submit" class="btn">Добавить</button>
+            </form>
+        </div>
+
+        <!-- Список паролей -->
+        <div class="password-list">
+            <h3>Сохраненные пароли</h3>
+            {% if passwords %}
+                {% for password in passwords %}
+                    <div class="password-item">
+                        <div class="password-info">
+                            <strong>{{ password.service }}</strong><br>
+                            Логин: {{ password.username }}<br>
+                            Пароль: {{ password.password }}
+                        </div>
+                        <div class="password-actions">
+                            <a href="{{ url_for('delete_password', password_id=password.id) }}" 
+                               class="delete-btn" 
+                               style="text-decoration: none; color: white; padding: 5px 10px; background: #dc3545; border-radius: 4px;"
+                               onclick="return confirm('Удалить этот пароль?')">
+                                Удалить
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>У вас пока нет сохраненных паролей.</p>
+            {% endif %}
+        </div>
+
+        <div class="anivme-label">
+        Тихонов Егор
+            </div>
+    </div>
+</body>
+</html>

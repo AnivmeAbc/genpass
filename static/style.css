@@ -1,0 +1,196 @@
+/* Стили для менеджера паролей */
+.manager-container {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: 24px;
+    height: calc(100vh - 200px);
+}
+
+.generator-panel,
+.passwords-panel {
+    background: var(--bg-surface);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow-lg);
+    overflow-y: auto;
+}
+
+/* Стили для списка паролей */
+.passwords-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.password-item {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 16px;
+    transition: all 0.3s ease;
+}
+
+.password-item:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.password-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.password-header h4 {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.delete-btn {
+    background: var(--danger);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.delete-btn:hover {
+    background: #dc2626;
+    transform: scale(1.1);
+}
+
+.password-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0;
+}
+
+.detail-item strong {
+    color: var(--text-secondary);
+    font-weight: 600;
+    min-width: 80px;
+}
+
+.detail-item span {
+    color: var(--text-primary);
+    flex: 1;
+}
+
+.copy-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.copy-btn:hover {
+    background: var(--primary-dark);
+    transform: scale(1.1);
+}
+
+.password-hidden {
+    cursor: pointer;
+    user-select: none;
+}
+
+.password-visible {
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+}
+
+/* Кнопка сохранения */
+.save-btn {
+    width: 100%;
+    padding: 14px 20px;
+    background: var(--secondary);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: var(--shadow-md);
+}
+
+.save-btn:hover {
+    background: #0da271;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Состояние пустого списка */
+.empty-passwords {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+}
+
+.empty-passwords i {
+    font-size: 3rem;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.empty-passwords p {
+    margin: 8px 0;
+}
+
+/* Адаптивность */
+@media (max-width: 1200px) {
+    .manager-container {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+    
+    .generator-panel,
+    .passwords-panel {
+        min-height: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .manager-container {
+        gap: 16px;
+    }
+    
+    .generator-panel,
+    .passwords-panel {
+        padding: 20px;
+    }
+    
+    .password-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .detail-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+}
